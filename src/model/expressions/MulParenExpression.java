@@ -24,7 +24,6 @@ public class MulParenExpression extends ParenExpression
     
     protected ParenExpression createThisTypeOfParenExpression (List<Expression> operands)
     {
-        checkNumberOfOperands(operands.size());
         return new MulParenExpression(operands);
     }
     

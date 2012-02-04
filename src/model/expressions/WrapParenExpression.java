@@ -23,7 +23,6 @@ public class WrapParenExpression extends ParenExpression
     
     protected ParenExpression createThisTypeOfParenExpression (List<Expression> operands)
     {
-        checkNumberOfOperands(operands.size());
         return new WrapParenExpression(operands);
     }
     

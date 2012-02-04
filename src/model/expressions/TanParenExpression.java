@@ -24,7 +24,6 @@ public class TanParenExpression extends ParenExpression
     
     protected ParenExpression createThisTypeOfParenExpression (List<Expression> operands)
     {
-        checkNumberOfOperands(operands.size());
         return new TanParenExpression(operands);
     }
     

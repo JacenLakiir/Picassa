@@ -24,7 +24,6 @@ public class CosParenExpression extends ParenExpression
     
     protected ParenExpression createThisTypeOfParenExpression (List<Expression> operands)
     {
-        checkNumberOfOperands(operands.size());
         return new CosParenExpression(operands);
     }
     

@@ -23,7 +23,6 @@ public class ModParenExpression extends ParenExpression
     
     protected ParenExpression createThisTypeOfParenExpression (List<Expression> operands)
     {
-        checkNumberOfOperands(operands.size());
         return new ModParenExpression(operands);
     }
     

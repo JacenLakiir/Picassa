@@ -41,7 +41,10 @@ public class ParenExpression extends Expression
         for (ExpressionFactory parenExpressionType : typesOfParenExpressions)
         {
             if (parenExpressionType.matchesCommand(command))
+            {
+                checkNumberOfOperands(operands.size());
                 return parenExpressionType.createThisTypeOfParenExpression(operands); 
+            }
         }
         throw new ParserException("Unexpected expression type", ParserException.Type.UNKNOWN_COMMAND);
     }
@@ -104,18 +107,6 @@ public class ParenExpression extends Expression
                 && Model.getValue("y").equals((new RGBColor(-1))));
     }
     
-    protected void checkNumberOfOperands (int numOperandsParsed)
-    {
-        if (numOperandsParsed < getMinNumberOfOperands())
-            throw new ParserException("Not enough operands: at least " +
-                                       getMinNumberOfOperands() + " operand(s) required for " +
-                                       getType() + " expression");
-        if (numOperandsParsed > getMaxNumberOfOperands())
-            throw new ParserException("Too many operands: no more than " + 
-                                       getMaxNumberOfOperands() + " operand(s) allowed for " +
-                                       getType() + " expression");
-    }
-    
     protected <T> boolean isCorrectInstance (Object parsedObject, Class<T> expectedObjectType)
     {
         return expectedObjectType.isInstance(parsedObject);
@@ -141,6 +132,18 @@ public class ParenExpression extends Expression
         parser.incrementCurrentPosition();
         parser.moveParser(parser.getCurrentPosition());
         return operands;
+    }
+    
+    private void checkNumberOfOperands (int numOperandsParsed)
+    {
+        if (numOperandsParsed < getMinNumberOfOperands())
+            throw new ParserException("Not enough operands: at least " +
+                                       getMinNumberOfOperands() + " operand(s) required for " +
+                                       getType() + " expression");
+        if (numOperandsParsed > getMaxNumberOfOperands())
+            throw new ParserException("Too many operands: no more than " + 
+                                       getMaxNumberOfOperands() + " operand(s) allowed for " +
+                                       getType() + " expression");
     }
     
     private static void initializeParenExpressionFactory ()

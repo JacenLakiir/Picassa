@@ -24,7 +24,6 @@ public class AbsParenExpression extends ParenExpression
     
     protected ParenExpression createThisTypeOfParenExpression (List<Expression> operands)
     {
-        checkNumberOfOperands(operands.size());
         return new AbsParenExpression(operands);
     }
     

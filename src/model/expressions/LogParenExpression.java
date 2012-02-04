@@ -24,7 +24,6 @@ public class LogParenExpression extends ParenExpression
     
     protected ParenExpression createThisTypeOfParenExpression (List<Expression> operands)
     {
-        checkNumberOfOperands(operands.size());
         return new LogParenExpression(operands);
     }
     

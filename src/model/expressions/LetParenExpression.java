@@ -28,7 +28,6 @@ public class LetParenExpression extends ParenExpression
     
     protected ParenExpression createThisTypeOfParenExpression (List<Expression> operands)
     {
-        checkNumberOfOperands(operands.size());
         return new LetParenExpression(operands);
     }
     

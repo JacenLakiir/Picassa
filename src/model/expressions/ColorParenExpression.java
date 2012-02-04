@@ -23,7 +23,6 @@ public class ColorParenExpression extends ParenExpression
     
     protected ParenExpression createThisTypeOfParenExpression (List<Expression> operands)
     {
-        checkNumberOfOperands(operands.size());
         return new ColorParenExpression(operands);
     }
     
