@@ -24,6 +24,9 @@ public class Parser
     // state of the parser
     private static int myCurrentPosition;
     private static String myInput;
+   
+    // implemented factories
+    private static final List<ExpressionFactory> typesOfExpressions = initializeExpressionFactory();
     
     private Parser () { }
     
@@ -57,8 +60,6 @@ public class Parser
     public Expression getAndParseExpression ()
     {
         String parseableString = myInput;
-        System.out.println(parseableString + " FROM PARSER");
-        List<ExpressionFactory> typesOfExpressions = initializeExpressionFactory();        
         for (ExpressionFactory expressionType : typesOfExpressions)
         {
             if (expressionType.isThisTypeOfExpression(parseableString))
@@ -121,10 +122,10 @@ public class Parser
     
     private boolean notAtEndOfString ()
     {
-        return myCurrentPosition < myInput.length();
+        return (myCurrentPosition < myInput.length());
     }
     
-    private List<ExpressionFactory> initializeExpressionFactory ()
+    private static List<ExpressionFactory> initializeExpressionFactory ()
     {
         List<ExpressionFactory> typesOfExpressions = new ArrayList<ExpressionFactory>();
         typesOfExpressions.add(NumberExpression.getFactory());

@@ -18,9 +18,9 @@ public class ParenExpression extends Expression
     private static final String myType = "ParenExpression";
     private static final List<ExpressionFactory> typesOfParenExpressions =
             initializeParenExpressionFactory();
-    protected static final int myMinNumberOfOperands = -1;
-    protected static final int myMaxNumberOfOperands = -1;
-    protected static List<Class<?>> myOperandTypes;
+    private static final int myMinNumberOfOperands = -1;
+    private static final int myMaxNumberOfOperands = -1;
+    private static List<Class<?>> myOperandTypes;
     protected List<Expression> myOperands;
     
     public ParenExpression (List<Expression> operands) 
@@ -36,11 +36,9 @@ public class ParenExpression extends Expression
     
     public Expression parseExpression (String parseableString)
     {
-        System.out.println(parseableString);
         String command = parseCommand(parseableString);
         List<Expression> operands = parseOperands();
-        
-        initializeParenExpressionFactory();        
+
         for (ExpressionFactory parenExpressionType : typesOfParenExpressions)
         {
             if (parenExpressionType.matchesCommand(command))

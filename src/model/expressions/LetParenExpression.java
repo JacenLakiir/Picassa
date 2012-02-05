@@ -11,10 +11,9 @@ public class LetParenExpression extends ParenExpression
     private static final String myType = "let";
     private static final int myMinNumberOfOperands = 3;
     private static final int myMaxNumberOfOperands = 3;
-    protected static final List<Class<?>> myOperandTypes = initializeOperandTypes();
-    private static VariableExpression myVariableExpression;
-    private static RGBColor myColor;
-   
+    private static final List<Class<?>> myOperandTypes = initializeOperandTypes();
+    private VariableExpression myVariableExpression;
+    private RGBColor myColor;
     
     public LetParenExpression (List<Expression> operands)
     {

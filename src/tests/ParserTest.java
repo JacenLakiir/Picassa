@@ -32,7 +32,6 @@ public class ParserTest
         Model.storeMapping("y", new RGBColor(-1));
     }
 
-
     @Test
     public void testConstant ()
     {
@@ -70,14 +69,9 @@ public class ParserTest
     {
         runTest(BLACK, "(color (color -1 -1 -1) -1 (color (color -1 -1 -1) -1 -1)) ");
         runTest(GRAY, "(color 0.5 (color 0.5 0.5 (color .5 0.5 .5) ) .5)");
-        /* not sure why some JUnit tests for LetParenExpression are failing (AssertionError)
-         * 
-         * works fine when running Picassa and printing resulting colors' components to the console
-         * in order to verify calculations
-         */
         runTest(WHITE, "(let myVar -1 (mul myVar myVar))");
-//        runTest(GRAY, "(let foo .1 (let bar -0.1 (plus foo bar)))");
-//        runTest(WHITE, "(let foo 3 (plus foo (let foo 4 foo)))");   
+        runTest(GRAY, "(let foo .6 (let bar -0.1 (plus foo bar)))");
+        runTest(WHITE, "(let foo 0.2 (plus foo (let foo 0.8 foo)))");   
     }
     
     @Test
