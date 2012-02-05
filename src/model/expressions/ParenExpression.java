@@ -16,9 +16,11 @@ public class ParenExpression extends Expression
     // which is a sequence of alphabetic characters
     private static final Pattern myRegex = Pattern.compile("\\(([A-z]+)");
     private static final String myType = "ParenExpression";
-    private static List<ExpressionFactory> typesOfParenExpressions;
-    protected static int myMinNumberOfOperands = -1;
-    protected static int myMaxNumberOfOperands = -1;
+    private static final List<ExpressionFactory> typesOfParenExpressions =
+            initializeParenExpressionFactory();
+    protected static final int myMinNumberOfOperands = -1;
+    protected static final int myMaxNumberOfOperands = -1;
+    protected static List<Class<?>> myOperandTypes;
     protected List<Expression> myOperands;
     
     public ParenExpression (List<Expression> operands) 
@@ -34,15 +36,17 @@ public class ParenExpression extends Expression
     
     public Expression parseExpression (String parseableString)
     {
+        System.out.println(parseableString);
         String command = parseCommand(parseableString);
         List<Expression> operands = parseOperands();
-
+        
         initializeParenExpressionFactory();        
         for (ExpressionFactory parenExpressionType : typesOfParenExpressions)
         {
             if (parenExpressionType.matchesCommand(command))
             {
-                checkNumberOfOperands(operands.size());
+                parenExpressionType.checkNumberOfOperands(operands.size());
+                parenExpressionType.checkTypeOfOperands(operands);
                 return parenExpressionType.createThisTypeOfParenExpression(operands); 
             }
         }
@@ -93,12 +97,17 @@ public class ParenExpression extends Expression
  
     protected int getMinNumberOfOperands ()
     {
-        return -1;
+        return myMinNumberOfOperands;
     }
 
     protected int getMaxNumberOfOperands ()
     {
-        return -1;
+        return myMaxNumberOfOperands;
+    }
+    
+    protected <T> List<Class<?>> getOperandTypes()
+    {
+        return myOperandTypes;
     }
     
     protected boolean isBeingEvaluatedForFirstPixel ()
@@ -134,7 +143,7 @@ public class ParenExpression extends Expression
         return operands;
     }
     
-    private void checkNumberOfOperands (int numOperandsParsed)
+    public void checkNumberOfOperands (int numOperandsParsed)
     {
         if (numOperandsParsed < getMinNumberOfOperands())
             throw new ParserException("Not enough operands: at least " +
@@ -146,38 +155,51 @@ public class ParenExpression extends Expression
                                        getType() + " expression");
     }
     
-    private static void initializeParenExpressionFactory ()
+    public void checkTypeOfOperands (List<Expression> operands)
     {
-        if (typesOfParenExpressions == null)
+        List<Class<?>> expectedOperandTypes = getOperandTypes();
+        if (expectedOperandTypes == null)
+            return;
+        boolean statusCheck = true;
+        for (int i = 0; i < operands.size(); i++)
         {
-            // new types for Part 1
-            typesOfParenExpressions = new ArrayList<ExpressionFactory>();
-            typesOfParenExpressions.add(PlusParenExpression.getParenFactory());
-            typesOfParenExpressions.add(MinusParenExpression.getParenFactory());
-            typesOfParenExpressions.add(MulParenExpression.getParenFactory());
-            typesOfParenExpressions.add(DivParenExpression.getParenFactory());
-            typesOfParenExpressions.add(ModParenExpression.getParenFactory());
-            typesOfParenExpressions.add(ExpParenExpression.getParenFactory());
-            typesOfParenExpressions.add(NegParenExpression.getParenFactory());
-            typesOfParenExpressions.add(ColorParenExpression.getParenFactory());
-            // new types for Part 2
-            typesOfParenExpressions.add(LetParenExpression.getParenFactory());
-            typesOfParenExpressions.add(RandomParenExpression.getParenFactory());
-            typesOfParenExpressions.add(FloorParenExpression.getParenFactory());
-            typesOfParenExpressions.add(CeilParenExpression.getParenFactory());
-            typesOfParenExpressions.add(AbsParenExpression.getParenFactory());
-            typesOfParenExpressions.add(ClampParenExpression.getParenFactory());
-            typesOfParenExpressions.add(WrapParenExpression.getParenFactory());
-            typesOfParenExpressions.add(SinParenExpression.getParenFactory());
-            typesOfParenExpressions.add(CosParenExpression.getParenFactory());
-            typesOfParenExpressions.add(TanParenExpression.getParenFactory());
-            typesOfParenExpressions.add(AtanParenExpression.getParenFactory());
-            typesOfParenExpressions.add(LogParenExpression.getParenFactory());            
-            typesOfParenExpressions.add(RGBtoYUVParenExpression.getParenFactory());
-            typesOfParenExpressions.add(YUVtoRGBParenExpression.getParenFactory());
-            typesOfParenExpressions.add(PerlinColorParenExpression.getParenFactory());
-            typesOfParenExpressions.add(PerlinBWParenExpression.getParenFactory());
+            statusCheck = statusCheck && isCorrectInstance(operands.get(i), expectedOperandTypes.get(i));
+            if (statusCheck == false)
+                throw new ParserException("Incorrect type of operand(s). Should be " +
+                                          expectedOperandTypes.toString());
         }
+    }
+    
+    private static List<ExpressionFactory> initializeParenExpressionFactory ()
+    {
+        List<ExpressionFactory> parenExpressionTypes = new ArrayList<ExpressionFactory>();
+        // new types for Part 1
+        parenExpressionTypes.add(PlusParenExpression.getParenFactory());
+        parenExpressionTypes.add(MinusParenExpression.getParenFactory());
+        parenExpressionTypes.add(MulParenExpression.getParenFactory());
+        parenExpressionTypes.add(DivParenExpression.getParenFactory());
+        parenExpressionTypes.add(ModParenExpression.getParenFactory());
+        parenExpressionTypes.add(ExpParenExpression.getParenFactory());
+        parenExpressionTypes.add(NegParenExpression.getParenFactory());
+        parenExpressionTypes.add(ColorParenExpression.getParenFactory());
+        // new types for Part 2
+        parenExpressionTypes.add(LetParenExpression.getParenFactory());
+        parenExpressionTypes.add(RandomParenExpression.getParenFactory());
+        parenExpressionTypes.add(FloorParenExpression.getParenFactory());
+        parenExpressionTypes.add(CeilParenExpression.getParenFactory());
+        parenExpressionTypes.add(AbsParenExpression.getParenFactory());
+        parenExpressionTypes.add(ClampParenExpression.getParenFactory());
+        parenExpressionTypes.add(WrapParenExpression.getParenFactory());
+        parenExpressionTypes.add(SinParenExpression.getParenFactory());
+        parenExpressionTypes.add(CosParenExpression.getParenFactory());
+        parenExpressionTypes.add(TanParenExpression.getParenFactory());
+        parenExpressionTypes.add(AtanParenExpression.getParenFactory());
+        parenExpressionTypes.add(LogParenExpression.getParenFactory());            
+        parenExpressionTypes.add(RGBtoYUVParenExpression.getParenFactory());
+        parenExpressionTypes.add(YUVtoRGBParenExpression.getParenFactory());
+        parenExpressionTypes.add(PerlinColorParenExpression.getParenFactory());
+        parenExpressionTypes.add(PerlinBWParenExpression.getParenFactory());
+        return parenExpressionTypes;
     }
             
     protected ParenExpression () { }

@@ -41,4 +41,14 @@ public class ExpressionFactory
         return myParenExpression.createThisTypeOfParenExpression(operands);
     }
     
+    public void checkNumberOfOperands (int numOperandsParsed)
+    {
+        myParenExpression.checkNumberOfOperands(numOperandsParsed);
+    }
+    
+    public void checkTypeOfOperands (List<Expression> operands)
+    {
+        myParenExpression.checkTypeOfOperands(operands);
+    }
+    
 }

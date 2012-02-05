@@ -57,6 +57,7 @@ public class Parser
     public Expression getAndParseExpression ()
     {
         String parseableString = myInput;
+        System.out.println(parseableString + " FROM PARSER");
         List<ExpressionFactory> typesOfExpressions = initializeExpressionFactory();        
         for (ExpressionFactory expressionType : typesOfExpressions)
         {

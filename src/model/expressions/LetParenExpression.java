@@ -1,9 +1,8 @@
 package model.expressions;
 
+import java.util.ArrayList;
 import java.util.List;
 import model.Model;
-import model.ParserException;
-import model.ParserException.Type;
 import model.RGBColor;
 
 public class LetParenExpression extends ParenExpression
@@ -12,6 +11,7 @@ public class LetParenExpression extends ParenExpression
     private static final String myType = "let";
     private static final int myMinNumberOfOperands = 3;
     private static final int myMaxNumberOfOperands = 3;
+    protected static final List<Class<?>> myOperandTypes = initializeOperandTypes();
     private static VariableExpression myVariableExpression;
     private static RGBColor myColor;
    
@@ -19,6 +19,7 @@ public class LetParenExpression extends ParenExpression
     public LetParenExpression (List<Expression> operands)
     {
         super(operands);
+        myVariableExpression = (VariableExpression) myOperands.get(0);
     }
     
     protected boolean matchesCommand (String command)
@@ -33,9 +34,10 @@ public class LetParenExpression extends ParenExpression
     
     public RGBColor evaluate ()
     {
-        if (isBeingEvaluatedForFirstPixel())
-            parseTemporaryVariable();
-        evaluateColor();
+        RGBColor tempVarColor = myOperands.get(1).evaluate();
+        Model.storeMapping(myVariableExpression.getVariable(), tempVarColor);  
+        myColor = myOperands.get(2).evaluate();
+        Model.removeMapping(myVariableExpression.getVariable());
         return myColor;
     }
     
@@ -54,23 +56,21 @@ public class LetParenExpression extends ParenExpression
         return myMaxNumberOfOperands;
     }
     
-    private void parseTemporaryVariable ()
+    protected <T> List<Class<?>> getOperandTypes ()
     {
-        if (isCorrectInstance(myOperands.get(0), VariableExpression.class))
-            myVariableExpression = (VariableExpression) myOperands.get(0);
-        else
-            throw new ParserException("Invalid variable name given", Type.BAD_SYNTAX);
+        return myOperandTypes;
     }
-    
-    private void evaluateColor ()
-    {
-        RGBColor tempVarColor = myOperands.get(1).evaluate();
-        Model.storeMapping(myVariableExpression.getVariable(), tempVarColor);  
-        myColor = myOperands.get(2).evaluate();
-        Model.removeMapping(myVariableExpression.getVariable());
-    }
-    
+
     private LetParenExpression () { }
+
+    private static <T> List<Class<?>> initializeOperandTypes ()
+    {
+        List<Class<?>> operandTypes = new ArrayList<Class<?>>();
+        operandTypes.add(VariableExpression.class);
+        operandTypes.add(Expression.class);
+        operandTypes.add(Expression.class);
+        return operandTypes;
+    }
     
     protected static ExpressionFactory getParenFactory ()
     {

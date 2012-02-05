@@ -86,7 +86,7 @@ public class ParserTest
 //        runExceptionalTest(ParserException.Type.BAD_SYNTAX, "--1");
         runExceptionalTest(ParserException.Type.EXTRA_CHARACTERS, "0.5 0.5");
         runExceptionalTest(ParserException.Type.UNKNOWN_COMMAND,  "(fooo 0.1 0.9)");
-        runExceptionalTest(ParserException.Type.UNDEFINED_VARIABLE, "(plus (let foo .5 (plus .1 .1)) foo)");
+        runExceptionalTest(ParserException.Type.UNDEFINED_VARIABLE, "(plus (let foo .5 (plus bar bar)) .5)");
     }
     
     @After
