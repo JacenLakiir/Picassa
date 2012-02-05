@@ -8,8 +8,7 @@ public class WrapParenExpression extends ParenExpression
     
     private static final String myType = "wrap";
     private static final int myMinNumberOfOperands = 1;
-    private static final int myMaxNumberOfOperands = 1;
-   
+    private static final int myMaxNumberOfOperands = 1; 
     
     public WrapParenExpression (List<Expression> operands)
     {

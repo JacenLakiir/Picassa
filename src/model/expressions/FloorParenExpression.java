@@ -10,7 +10,6 @@ public class FloorParenExpression extends ParenExpression
     private static final String myType = "floor";
     private static final int myMinNumberOfOperands = 1;
     private static final int myMaxNumberOfOperands = 1;
-   
     
     public FloorParenExpression (List<Expression> operands)
     {

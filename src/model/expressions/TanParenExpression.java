@@ -9,8 +9,7 @@ public class TanParenExpression extends ParenExpression
     
     private static final String myType = "tan";
     private static final int myMinNumberOfOperands = 1;
-    private static final int myMaxNumberOfOperands = 1;
-   
+    private static final int myMaxNumberOfOperands = 1;   
     
     public TanParenExpression (List<Expression> operands)
     {

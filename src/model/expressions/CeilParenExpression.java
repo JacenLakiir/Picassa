@@ -10,7 +10,6 @@ public class CeilParenExpression extends ParenExpression
     private static final String myType = "ceil";
     private static final int myMinNumberOfOperands = 1;
     private static final int myMaxNumberOfOperands = 1;
-   
     
     public CeilParenExpression (List<Expression> operands)
     {

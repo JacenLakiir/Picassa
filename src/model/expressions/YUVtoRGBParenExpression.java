@@ -9,8 +9,7 @@ public class YUVtoRGBParenExpression extends ParenExpression
     
     private static final String myType = "yCrCbtoRGB";
     private static final int myMinNumberOfOperands = 1;
-    private static final int myMaxNumberOfOperands = 1;
-   
+    private static final int myMaxNumberOfOperands = 1;  
     
     public YUVtoRGBParenExpression (List<Expression> operands)
     {

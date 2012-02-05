@@ -10,7 +10,6 @@ public class CosParenExpression extends ParenExpression
     private static final String myType = "cos";
     private static final int myMinNumberOfOperands = 1;
     private static final int myMaxNumberOfOperands = 1;
-   
     
     public CosParenExpression (List<Expression> operands)
     {

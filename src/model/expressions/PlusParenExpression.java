@@ -10,7 +10,6 @@ public class PlusParenExpression extends ParenExpression
     private static final String myType = "plus";
     private static final int myMinNumberOfOperands = 2;
     private static final int myMaxNumberOfOperands = 2;
-
     
     public PlusParenExpression (List<Expression> operands)
     {

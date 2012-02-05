@@ -9,8 +9,7 @@ public class NegParenExpression extends ParenExpression
     
     private static final String myType = "neg";
     private static final int myMinNumberOfOperands = 1;
-    private static final int myMaxNumberOfOperands = 1;
-   
+    private static final int myMaxNumberOfOperands = 1;   
     
     public NegParenExpression (List<Expression> operands)
     {

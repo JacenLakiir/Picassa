@@ -10,7 +10,6 @@ public class AbsParenExpression extends ParenExpression
     private static final String myType = "abs";
     private static final int myMinNumberOfOperands = 1;
     private static final int myMaxNumberOfOperands = 1;
-   
     
     public AbsParenExpression (List<Expression> operands)
     {

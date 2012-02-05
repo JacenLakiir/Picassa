@@ -10,7 +10,6 @@ public class PerlinColorParenExpression extends ParenExpression
     private static final String myType = "perlinColor";
     private static final int myMinNumberOfOperands = 2;
     private static final int myMaxNumberOfOperands = 2;
-
     
     public PerlinColorParenExpression (List<Expression> operands)
     {

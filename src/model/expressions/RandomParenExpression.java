@@ -10,12 +10,13 @@ public class RandomParenExpression extends ParenExpression
     private static final String myType = "random";
     private static final int myMinNumberOfOperands = 0;
     private static final int myMaxNumberOfOperands = 0;
-    private static RGBColor myRandomColor;
+    private RGBColor myRandomColor;
    
     
     public RandomParenExpression (List<Expression> operands)
     {
         super(operands);
+        myRandomColor = ColorCombinations.random();
     }
     
     protected boolean matchesCommand (String command)
@@ -30,8 +31,6 @@ public class RandomParenExpression extends ParenExpression
     
     public RGBColor evaluate ()
     {
-        if (isBeingEvaluatedForFirstPixel())
-            myRandomColor = ColorCombinations.random();
         return myRandomColor;
     }
     

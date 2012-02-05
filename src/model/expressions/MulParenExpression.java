@@ -9,8 +9,7 @@ public class MulParenExpression extends ParenExpression
     
     private static final String myType = "mul";
     private static final int myMinNumberOfOperands = 2;
-    private static final int myMaxNumberOfOperands = 2;
-    
+    private static final int myMaxNumberOfOperands = 2;   
     
     public MulParenExpression (List<Expression> operands)
     {

@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import model.Model;
 import model.ParserException;
 import model.RGBColor;
 
@@ -83,6 +82,33 @@ public class ParenExpression extends Expression
         return null;
     }
     
+    protected void checkNumberOfOperands (int numOperandsParsed)
+    {
+        if (numOperandsParsed < getMinNumberOfOperands())
+            throw new ParserException("Not enough operands: at least " +
+                                       getMinNumberOfOperands() + " operand(s) required for " +
+                                       getType() + " expression");
+        if (numOperandsParsed > getMaxNumberOfOperands())
+            throw new ParserException("Too many operands: no more than " + 
+                                       getMaxNumberOfOperands() + " operand(s) allowed for " +
+                                       getType() + " expression");
+    }
+    
+    protected void checkTypeOfOperands (List<Expression> operands)
+    {
+        List<Class<?>> expectedOperandTypes = getOperandTypes();
+        if (expectedOperandTypes == null)
+            return;
+        boolean statusCheck = true;
+        for (int i = 0; i < operands.size(); i++)
+        {
+            statusCheck = statusCheck && isCorrectInstance(operands.get(i), expectedOperandTypes.get(i));
+            if (statusCheck == false)
+                throw new ParserException("Incorrect type of operand(s). Should be " +
+                                          expectedOperandTypes.toString());
+        }
+    }
+    
     protected String getType ()
     {
         return null;
@@ -108,17 +134,6 @@ public class ParenExpression extends Expression
         return myOperandTypes;
     }
     
-    protected boolean isBeingEvaluatedForFirstPixel ()
-    {
-        return (Model.getValue("x").equals(new RGBColor(-1))
-                && Model.getValue("y").equals((new RGBColor(-1))));
-    }
-    
-    protected <T> boolean isCorrectInstance (Object parsedObject, Class<T> expectedObjectType)
-    {
-        return expectedObjectType.isInstance(parsedObject);
-    }
-    
     private String parseCommand (String parseableString)
     {
         Matcher expMatcher = myRegex.matcher(parseableString);
@@ -141,32 +156,11 @@ public class ParenExpression extends Expression
         return operands;
     }
     
-    public void checkNumberOfOperands (int numOperandsParsed)
+    private <T> boolean isCorrectInstance (Object parsedObject, Class<T> expectedObjectType)
     {
-        if (numOperandsParsed < getMinNumberOfOperands())
-            throw new ParserException("Not enough operands: at least " +
-                                       getMinNumberOfOperands() + " operand(s) required for " +
-                                       getType() + " expression");
-        if (numOperandsParsed > getMaxNumberOfOperands())
-            throw new ParserException("Too many operands: no more than " + 
-                                       getMaxNumberOfOperands() + " operand(s) allowed for " +
-                                       getType() + " expression");
+        return expectedObjectType.isInstance(parsedObject);
     }
     
-    public void checkTypeOfOperands (List<Expression> operands)
-    {
-        List<Class<?>> expectedOperandTypes = getOperandTypes();
-        if (expectedOperandTypes == null)
-            return;
-        boolean statusCheck = true;
-        for (int i = 0; i < operands.size(); i++)
-        {
-            statusCheck = statusCheck && isCorrectInstance(operands.get(i), expectedOperandTypes.get(i));
-            if (statusCheck == false)
-                throw new ParserException("Incorrect type of operand(s). Should be " +
-                                          expectedOperandTypes.toString());
-        }
-    }
     
     private static List<ExpressionFactory> initializeParenExpressionFactory ()
     {

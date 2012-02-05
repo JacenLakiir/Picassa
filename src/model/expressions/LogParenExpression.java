@@ -9,8 +9,7 @@ public class LogParenExpression extends ParenExpression
     
     private static final String myType = "log";
     private static final int myMinNumberOfOperands = 1;
-    private static final int myMaxNumberOfOperands = 1;
-   
+    private static final int myMaxNumberOfOperands = 1;  
     
     public LogParenExpression (List<Expression> operands)
     {

@@ -10,7 +10,6 @@ public class PerlinBWParenExpression extends ParenExpression
     private static final String myType = "perlinBW";
     private static final int myMinNumberOfOperands = 2;
     private static final int myMaxNumberOfOperands = 2;
-
     
     public PerlinBWParenExpression (List<Expression> operands)
     {

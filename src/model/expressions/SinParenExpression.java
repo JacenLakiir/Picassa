@@ -9,8 +9,7 @@ public class SinParenExpression extends ParenExpression
     
     private static final String myType = "sin";
     private static final int myMinNumberOfOperands = 1;
-    private static final int myMaxNumberOfOperands = 1;
-   
+    private static final int myMaxNumberOfOperands = 1;  
     
     public SinParenExpression (List<Expression> operands)
     {

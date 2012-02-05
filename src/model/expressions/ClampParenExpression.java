@@ -9,7 +9,6 @@ public class ClampParenExpression extends ParenExpression
     private static final String myType = "clamp";
     private static final int myMinNumberOfOperands = 1;
     private static final int myMaxNumberOfOperands = 1;
-   
     
     public ClampParenExpression (List<Expression> operands)
     {

@@ -10,7 +10,6 @@ public class AtanParenExpression extends ParenExpression
     private static final String myType = "atan";
     private static final int myMinNumberOfOperands = 1;
     private static final int myMaxNumberOfOperands = 1;
-   
     
     public AtanParenExpression (List<Expression> operands)
     {
