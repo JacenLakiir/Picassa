@@ -1,21 +1,20 @@
 package model.expressions;
 
+import java.util.ArrayList;
 import java.util.List;
 import model.RGBColor;
 
 
-public class RandomParenExpression extends ParenExpression
+public class MinParenExpression extends ParenExpression
 {
 
-    private static final String myType = "random";
-    private static final int myMinNumberOfOperands = 0;
-    private static final int myMaxNumberOfOperands = 0;
-    private RGBColor myRandomColor;
+    private static final String myType = "min";
+    private static final int myMinNumberOfOperands = 2;
+    private static final int myMaxNumberOfOperands = Integer.MAX_VALUE;
 
-    public RandomParenExpression (List<Expression> operands)
+    public MinParenExpression (List<Expression> operands)
     {
         super(operands);
-        myRandomColor = RGBColor.random();
     }
 
     @Override
@@ -27,13 +26,16 @@ public class RandomParenExpression extends ParenExpression
     @Override
     protected ParenExpression createThisTypeOfParenExpression (List<Expression> operands)
     {
-        return new RandomParenExpression(operands);
+        return new MinParenExpression(operands);
     }
 
     @Override
     public RGBColor evaluate ()
     {
-        return myRandomColor;
+        List<RGBColor> colors = new ArrayList<RGBColor>();
+        for (int i = 0; i < myOperands.size(); i++)
+            colors.add(myOperands.get(i).evaluate());
+        return RGBColor.minimum(colors);
     }
 
     @Override
@@ -54,12 +56,12 @@ public class RandomParenExpression extends ParenExpression
         return myMaxNumberOfOperands;
     }
 
-    private RandomParenExpression ()
+    private MinParenExpression ()
     {}
 
     protected static ExpressionFactory getParenFactory ()
     {
-        return new ExpressionFactory(new RandomParenExpression());
+        return new ExpressionFactory(new MinParenExpression());
     }
 
 }

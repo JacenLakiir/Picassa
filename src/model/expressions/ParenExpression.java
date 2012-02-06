@@ -203,6 +203,12 @@ public class ParenExpression extends Expression
         parenExpressionTypes.add(YUVtoRGBParenExpression.getParenFactory());
         parenExpressionTypes.add(PerlinColorParenExpression.getParenFactory());
         parenExpressionTypes.add(PerlinBWParenExpression.getParenFactory());
+        // new types for Part 3
+        parenExpressionTypes.add(SumParenExpression.getParenFactory());
+        parenExpressionTypes.add(ProductParenExpression.getParenFactory());
+        parenExpressionTypes.add(AverageParenExpression.getParenFactory());
+        parenExpressionTypes.add(MinParenExpression.getParenFactory());
+        parenExpressionTypes.add(MaxParenExpression.getParenFactory());
         return parenExpressionTypes;
     }
 

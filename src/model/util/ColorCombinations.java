@@ -1,6 +1,5 @@
 package model.util;
 
-import java.util.Random;
 import model.RGBColor;
 
 
@@ -82,18 +81,6 @@ public class ColorCombinations
     public static RGBColor color (RGBColor color1, RGBColor color2, RGBColor color3)
     {
         return new RGBColor(color1.getRed(), color2.getBlue(), color3.getGreen());
-    }
-
-    /**
-     * Creates a random color by randomly generating RGB components.
-     */
-    public static RGBColor random ()
-    {
-        Random random = new Random();
-        double randomRed = -1 + random.nextDouble() + random.nextDouble();
-        double randomGreen = -1 + random.nextDouble() + random.nextDouble();
-        double randomBlue = -1 + random.nextDouble() + random.nextDouble();
-        return new RGBColor(randomRed, randomGreen, randomBlue);
     }
 
 }

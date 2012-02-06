@@ -80,6 +80,15 @@ public class ParserTest
         runTest(GRAY, "(let foo .6 (let bar -0.1 (plus foo bar)))");
         runTest(WHITE, "(let foo 0.2 (plus foo (let foo 0.8 foo)))");
     }
+    
+    @Test public void testInfiniteOps ()
+    {
+        runTest(GRAY, "(sum 0.2 0.2 0.05 .03 0.01 .01)");
+        runTest(GRAY, "(product 1 1 0.5 -1 (! 1))");
+        runTest(GRAY, "(average (color 1 1 1) (color (! 1) (neg 1) -1) (color 1 1 1) (color 1 1 1))");
+        runTest(BLACK, "(min (mul x x) y 0 (plus .1 0.9) -1)");
+        runTest(WHITE, "(max (mul x x) y 0 (plus .1 0.9) -1)");
+    }
 
     @Test
     public void testExceptions ()
@@ -90,6 +99,7 @@ public class ParserTest
         runExceptionalTest(ParserException.Type.UNKNOWN_COMMAND, "(fooo 0.1 0.9)");
         runExceptionalTest(ParserException.Type.UNDEFINED_VARIABLE,
                            "(plus (let foo .5 (plus bar bar)) .5)");
+        runExceptionalTest(ParserException.Type.BAD_SYNTAX, "(sum 1)");
     }
 
     @After

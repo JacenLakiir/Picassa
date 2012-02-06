@@ -2,7 +2,10 @@ package model;
 
 import java.awt.Color;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
 
 
 /**
@@ -203,6 +206,54 @@ public class RGBColor implements Comparable<RGBColor>, Iterable<Double>
         double range = COLOR_MAX - COLOR_MIN;
         return (double) value / JAVA_COLOR_MAX * range + COLOR_MIN;
     }
+    
+
+    /**
+     * Creates a random color by randomly generating RGB components.
+     */
+    public static RGBColor random ()
+    {
+        Random random = new Random();
+        double randomRed = -1 + random.nextDouble() + random.nextDouble();
+        double randomGreen = -1 + random.nextDouble() + random.nextDouble();
+        double randomBlue = -1 + random.nextDouble() + random.nextDouble();
+        return new RGBColor(randomRed, randomGreen, randomBlue);
+    }
+    
+    /**
+     * Returns the minimum color from a list of colors.
+     */
+    public static RGBColor minimum (List<RGBColor> colors)
+    {
+        Collections.sort(colors);
+        return colors.get(0);
+    }
+    
+    /**
+     * Returns the maximum color from a list of colors.
+     */
+    public static RGBColor maximum (List<RGBColor> colors)
+    {
+        Collections.sort(colors);
+        return colors.get(colors.size()-1);
+    }
+    
+    /**
+     * Returns the average color from a list of colors.
+     */
+    public static RGBColor average (List<RGBColor> colors)
+    {
+        double[] components = new double[3];
+        for (RGBColor c : colors)
+        {
+            components[0] += c.getRed();
+            components[1] += c.getGreen();
+            components[2] += c.getBlue();
+        }
+        for (int i = 0; i < components.length; i++)
+            components[i] /= colors.size();
+        return new RGBColor(components[0], components[1], components[2]);
+    }
 
     /**
      * Converts the given value to the Java Color's range.
@@ -213,4 +264,5 @@ public class RGBColor implements Comparable<RGBColor>, Iterable<Double>
         double range = COLOR_MAX - COLOR_MIN;
         return (int) ((value - COLOR_MIN) / range * JAVA_COLOR_MAX);
     }
+
 }
