@@ -52,13 +52,13 @@ public class Model
             for (int imageX = 0; imageX < size.width; imageX++)
             {
                 variableMap.put("x", new RGBColor(imageToDomainScale(imageX, size.width)));
-                variableMap.put("t", new RGBColor(myCurrentTime*2 - 1));
+                variableMap.put("t", new RGBColor(myCurrentTime * 2 - 1));
                 result.setColor(imageX, imageY, toEval.evaluate().toJavaColor());
             }
         }
         return result;
     }
-    
+
     /**
      * Advance to the next frame in the animation.
      */
@@ -79,7 +79,8 @@ public class Model
     {
         RGBColor value = variableMap.get(variable);
         if (value == null)
-              throw new ParserException("Undefined variable: " + variable, Type.UNDEFINED_VARIABLE);
+                          throw new ParserException("Undefined variable: " + variable,
+                                                    Type.UNDEFINED_VARIABLE);
         return value;
     }
 
@@ -101,5 +102,5 @@ public class Model
         double range = DOMAIN_MAX - DOMAIN_MIN;
         return ((double) value / bounds) * range + DOMAIN_MIN;
     }
-    
+
 }

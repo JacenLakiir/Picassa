@@ -206,7 +206,6 @@ public class RGBColor implements Comparable<RGBColor>, Iterable<Double>
         double range = COLOR_MAX - COLOR_MIN;
         return (double) value / JAVA_COLOR_MAX * range + COLOR_MIN;
     }
-    
 
     /**
      * Creates a random color by randomly generating RGB components.
@@ -219,7 +218,7 @@ public class RGBColor implements Comparable<RGBColor>, Iterable<Double>
         double randomBlue = -1 + random.nextDouble() + random.nextDouble();
         return new RGBColor(randomRed, randomGreen, randomBlue);
     }
-    
+
     /**
      * Returns the minimum color from a list of colors.
      */
@@ -228,16 +227,16 @@ public class RGBColor implements Comparable<RGBColor>, Iterable<Double>
         Collections.sort(colors);
         return colors.get(0);
     }
-    
+
     /**
      * Returns the maximum color from a list of colors.
      */
     public static RGBColor maximum (List<RGBColor> colors)
     {
         Collections.sort(colors);
-        return colors.get(colors.size()-1);
+        return colors.get(colors.size() - 1);
     }
-    
+
     /**
      * Returns the average color from a list of colors.
      */
@@ -254,10 +253,10 @@ public class RGBColor implements Comparable<RGBColor>, Iterable<Double>
             components[i] /= colors.size();
         return new RGBColor(components[0], components[1], components[2]);
     }
-    
 
     /**
-     * Returns the value of a color, which is defined as the average of its components
+     * Returns the value of a color, which is defined as the average of its
+     * components
      */
     public static double computeValue (RGBColor color)
     {

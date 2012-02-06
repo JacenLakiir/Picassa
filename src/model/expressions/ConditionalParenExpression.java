@@ -34,8 +34,7 @@ public class ConditionalParenExpression extends ParenExpression
         RGBColor testCondition = myOperands.get(0).evaluate();
         if (RGBColor.computeValue(testCondition) > 0)
             return myOperands.get(1).evaluate();
-        else
-            return myOperands.get(2).evaluate();
+        else return myOperands.get(2).evaluate();
     }
 
     @Override

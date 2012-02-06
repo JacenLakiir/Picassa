@@ -31,6 +31,7 @@ public class ParserTest
         myModel = Model.getInstance();
         myModel.storeMapping("x", new RGBColor(-1));
         myModel.storeMapping("y", new RGBColor(-1));
+        myModel.storeMapping("t", new RGBColor(-1));
     }
 
     @Test
@@ -82,12 +83,14 @@ public class ParserTest
         runTest(WHITE, "(if (color 0.5 (color 0.5 0.5 (color .5 0.5 .5) ) .5) 1 y)");
         runTest(BLACK, "(if (clamp (! 100.5 ) ) (product y x 2) -1)");
     }
-    
-    @Test public void testInfiniteOps ()
+
+    @Test
+    public void testInfiniteOps ()
     {
         runTest(GRAY, "(sum 0.2 0.2 0.05 .03 0.01 .01)");
         runTest(GRAY, "(product 1 1 0.5 -1 (! 1))");
-        runTest(GRAY, "(average (color 1 1 1) (color (! 1) (neg 1) -1) (color 1 1 1) (color 1 1 1))");
+        runTest(GRAY,
+                "(average (color 1 1 1) (color (! 1) (neg 1) -1) (color 1 1 1) (color 1 1 1))");
         runTest(BLACK, "(min (mul x x) y 0 (plus .1 0.9) -1)");
         runTest(WHITE, "(max (mul x x) y 0 (plus .1 0.9) -1)");
     }
@@ -109,6 +112,7 @@ public class ParserTest
     {
         myModel.removeMapping("x");
         myModel.removeMapping("y");
+        myModel.removeMapping("t");
     }
 
     private void runExceptionalTest (ParserException.Type type, String expression)

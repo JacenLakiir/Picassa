@@ -17,8 +17,9 @@ public class ParenExpression extends Expression
     // which is one of several special symbols
     private static final String commandRegex = "[A-z]+";
     private static final String symbolRegex = "[\\+\\-\\*/%\\^!]";
-    private static final Pattern myRegex = Pattern.compile("\\((" + commandRegex + "|" + symbolRegex + ")");
-    
+    private static final Pattern myRegex = Pattern.compile("\\((" + commandRegex + "|" +
+                                                           symbolRegex + ")");
+
     private static final String myType = "ParenExpression";
     private static final List<ExpressionFactory> typesOfParenExpressions =
         initializeParenExpressionFactory();
@@ -121,7 +122,7 @@ public class ParenExpression extends Expression
     {
         return myType;
     }
-    
+
     protected String getSymbol ()
     {
         return null;

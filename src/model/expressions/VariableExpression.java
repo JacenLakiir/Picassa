@@ -41,7 +41,8 @@ public class VariableExpression extends Expression
     public RGBColor evaluate ()
     {
         RGBColor value = myModel.getValue(myVariable);
-        if (value != null) return value;
+        if (value != null)
+            return value;
         else throw new ParserException("Undefined variable: " + myVariable, Type.UNDEFINED_VARIABLE);
     }
 

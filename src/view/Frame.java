@@ -26,7 +26,7 @@ public class Frame extends JFrame
 {
     // default version number
     private static final long serialVersionUID = 1L;
-    private static final int ANIMATION_DELAY = 100;    // in milli-seconds
+    private static final int ANIMATION_DELAY = 100; // in milli-seconds
 
     // my state
     private Model myModel;
@@ -35,7 +35,6 @@ public class Frame extends JFrame
     @SuppressWarnings("unused")
     private Dimension mySize;
     private Timer myTimer;
-
 
     /**
      * Create frame with the given title and size for the interior canvas.
@@ -98,40 +97,41 @@ public class Frame extends JFrame
         result.setBorder(BorderFactory.createLoweredBevelBorder());
         return result;
     }
-    
+
     // Evaluate the given input repeatedly to produce an animation
     private void animateExpression (final String text)
     {
         // generate new pictures to animate
         TimerTask task = new TimerTask()
+        {
+            private int index = 0;
+
+            @Override
+            public void run ()
             {
-                private int index = 0;
-                @Override
-                public void run ()
+                try
                 {
-                    try
+                    if (index <= Model.NUM_FRAMES)
                     {
-                        if (index <= Model.NUM_FRAMES)
-                        {
-                            myDisplay.setIcon(myModel.evaluate(text, myDisplay.getSize()).toIcon());
-                            myModel.nextFrame();
-                            index++;
-                        }
-                        else
-                        {
-                            endAnimation();
-                        }
+                        myDisplay.setIcon(myModel.evaluate(text, myDisplay.getSize()).toIcon());
+                        myModel.nextFrame();
+                        index++;
                     }
-                    catch (ParserException e)
+                    else
                     {
                         endAnimation();
-                        JOptionPane.showMessageDialog(Frame.this,
-                                                      e.getMessage(),
-                                                      "Input Error",
-                                                      JOptionPane.ERROR_MESSAGE);
                     }
                 }
-            };
+                catch (ParserException e)
+                {
+                    endAnimation();
+                    JOptionPane.showMessageDialog(Frame.this,
+                                                  e.getMessage(),
+                                                  "Input Error",
+                                                  JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        };
         // end previous animation if still running
         endAnimation();
         // start new animation
@@ -139,7 +139,6 @@ public class Frame extends JFrame
         myTimer.schedule(task, 0, ANIMATION_DELAY);
         myModel.reset();
     }
-
 
     // Silly Java anachronism that you cannot cancel the same Timer twice
     private void endAnimation ()
