@@ -79,6 +79,9 @@ public class ParserTest
         runTest(WHITE, "(let myVar -1 (mul myVar myVar))");
         runTest(GRAY, "(let foo .6 (let bar -0.1 (plus foo bar)))");
         runTest(WHITE, "(let foo 0.2 (plus foo (let foo 0.8 foo)))");
+        runTest(GRAY, "(if 0 x 0.5)");
+        runTest(WHITE, "(if (color 0.5 (color 0.5 0.5 (color .5 0.5 .5) ) .5) 1 y)");
+        runTest(BLACK, "(if (clamp (! 100.5 ) ) (product y x 2) -1)");
     }
     
     @Test public void testInfiniteOps ()

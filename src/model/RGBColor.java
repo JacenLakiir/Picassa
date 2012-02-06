@@ -254,6 +254,15 @@ public class RGBColor implements Comparable<RGBColor>, Iterable<Double>
             components[i] /= colors.size();
         return new RGBColor(components[0], components[1], components[2]);
     }
+    
+
+    /**
+     * Returns the value of a color, which is defined as the average of its components
+     */
+    public static double computeValue (RGBColor color)
+    {
+        return ((color.getRed() + color.getGreen() + color.getBlue()) / 3);
+    }
 
     /**
      * Converts the given value to the Java Color's range.

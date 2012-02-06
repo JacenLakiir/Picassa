@@ -209,6 +209,7 @@ public class ParenExpression extends Expression
         parenExpressionTypes.add(AverageParenExpression.getParenFactory());
         parenExpressionTypes.add(MinParenExpression.getParenFactory());
         parenExpressionTypes.add(MaxParenExpression.getParenFactory());
+        parenExpressionTypes.add(ConditionalParenExpression.getParenFactory());
         return parenExpressionTypes;
     }
 
