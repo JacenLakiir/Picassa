@@ -32,9 +32,9 @@ Impressions:
 
 Taking a long second look at my design pointed out some glaring weak spots not addressed by Design 1.
 
-With my UTA's advice, I overhauled parsing for ParenExpressions by refactoring some methods that were previously implemented only within the (usually one) subclass that needed it so that my design became more extensible and parsing was completely done with ParenExpression rather than sometimes being continue at the subclass-level (thereby eliminating feature envy). The two main suspects for this refactoring were checks for the number of operands parsed and the type of operands parsed.
+With my UTA's advice, I overhauled parsing for ParenExpressions by refactoring some methods that were previously implemented only within the (usually one) subclass that needed it so that my design is more extensible and parsing is completely done with ParenExpression rather than sometimes being continued at the subclass-level (thereby eliminating feature envy). The two main suspects for this refactoring were checks for the number of operands parsed and the type of operands parsed.
 
-I also changed some instance variable declarations across many Expression subclasses by fixing erroneous static declarations and declaring some more complicated instance variables as final by initializing them through a function call. This improved the efficiency of my code and cut down on unnecessary redundancy.
+I also changed some instance variable declarations across many Expression subclasses by fixing erroneous static declarations and declaring some more complicated instance variables as final by initializing them through a function call. This improved efficiency and cut down on unnecessary function calls.
 
 Finally I cleaned up and reformatted my code to follow a standard set of guidelines for formatting.
 
