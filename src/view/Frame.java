@@ -30,7 +30,6 @@ public class Frame extends JFrame
     private JTextField myInput;
     private Dimension mySize;
 
-
     /**
      * Create frame with the given title and size for the interior canvas.
      */
@@ -48,7 +47,6 @@ public class Frame extends JFrame
         pack();
     }
 
-
     /**
      * Updates current model for this view.
      */
@@ -60,30 +58,29 @@ public class Frame extends JFrame
         }
     }
 
-
     // Return input area where ENTER evaluates expression.
     protected JTextField makeInput ()
     {
         JTextField result = new JTextField();
         result.setBorder(BorderFactory.createLoweredBevelBorder());
         result.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed (ActionEvent evt)
             {
-                @Override
-                public void actionPerformed (ActionEvent evt)
+                try
                 {
-                    try
-                    {
-                        myDisplay.setIcon(myModel.evaluate(myInput.getText(), mySize).toIcon());
-                    }
-                    catch (ParserException e)
-                    {
-                        JOptionPane.showMessageDialog(Frame.this,
-                                                      e.getMessage(),
-                                                      "Input Error",
-                                                      JOptionPane.ERROR_MESSAGE);
-                    }
+                    myDisplay.setIcon(myModel.evaluate(myInput.getText(), mySize).toIcon());
                 }
-            });
+                catch (ParserException e)
+                {
+                    JOptionPane.showMessageDialog(Frame.this,
+                                                  e.getMessage(),
+                                                  "Input Error",
+                                                  JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
         return result;
     }
 

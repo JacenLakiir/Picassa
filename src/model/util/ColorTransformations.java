@@ -2,6 +2,7 @@ package model.util;
 
 import model.RGBColor;
 
+
 /**
  * Simple utility class for transforming colors through various functions.
  */
@@ -12,14 +13,11 @@ public class ColorTransformations
      */
     public static RGBColor negate (RGBColor color)
     {
-        return new RGBColor(-1 * color.getRed(),
-                            -1 * color.getGreen(),
-                            -1 * color.getBlue());
+        return new RGBColor(-1 * color.getRed(), -1 * color.getGreen(), -1 * color.getBlue());
     }
-    
+
     /**
-     * Applies the floor function to the RGB components
-     * of a color.
+     * Applies the floor function to the RGB components of a color.
      */
     public static RGBColor floor (RGBColor color)
     {
@@ -27,10 +25,9 @@ public class ColorTransformations
                             Math.floor(color.getGreen()),
                             Math.floor(color.getBlue()));
     }
-    
+
     /**
-     * Applies the ceiling function to the RGB components
-     * of a color.
+     * Applies the ceiling function to the RGB components of a color.
      */
     public static RGBColor ceiling (RGBColor color)
     {
@@ -38,10 +35,9 @@ public class ColorTransformations
                             Math.ceil(color.getGreen()),
                             Math.ceil(color.getBlue()));
     }
-    
+
     /**
-     * Takes the absolute value of the RGB components
-     * of a color.
+     * Takes the absolute value of the RGB components of a color.
      */
     public static RGBColor absoluteValue (RGBColor color)
     {
@@ -49,10 +45,9 @@ public class ColorTransformations
                             Math.abs(color.getGreen()),
                             Math.abs(color.getBlue()));
     }
-    
+
     /**
-     * Applies the sine function to the RGB components
-     * of a color.
+     * Applies the sine function to the RGB components of a color.
      */
     public static RGBColor sine (RGBColor color)
     {
@@ -60,10 +55,9 @@ public class ColorTransformations
                             Math.sin(color.getGreen()),
                             Math.sin(color.getBlue()));
     }
-    
+
     /**
-     * Applies the cosine function to the RGB components
-     * of a color.
+     * Applies the cosine function to the RGB components of a color.
      */
     public static RGBColor cosine (RGBColor color)
     {
@@ -71,10 +65,9 @@ public class ColorTransformations
                             Math.cos(color.getGreen()),
                             Math.cos(color.getBlue()));
     }
-    
+
     /**
-     * Applies the tangent function to the RGB components
-     * of a color.
+     * Applies the tangent function to the RGB components of a color.
      */
     public static RGBColor tangent (RGBColor color)
     {
@@ -82,10 +75,9 @@ public class ColorTransformations
                             Math.tan(color.getGreen()),
                             Math.tan(color.getBlue()));
     }
-    
+
     /**
-     * Applies the arctangent function to the RGB components
-     * of a color.
+     * Applies the arctangent function to the RGB components of a color.
      */
     public static RGBColor arctangent (RGBColor color)
     {
@@ -93,10 +85,9 @@ public class ColorTransformations
                             Math.atan(color.getGreen()),
                             Math.atan(color.getBlue()));
     }
-    
+
     /**
-     * Applies the natural logarithm function to the RGB
-     * components of a color.
+     * Applies the natural logarithm function to the RGB components of a color.
      */
     public static RGBColor naturalLog (RGBColor color)
     {

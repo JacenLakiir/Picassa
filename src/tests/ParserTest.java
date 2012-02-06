@@ -1,12 +1,16 @@
 package tests;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import java.awt.Color;
 import model.Model;
 import model.Parser;
 import model.ParserException;
 import model.RGBColor;
-import static org.junit.Assert.*;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 
 public class ParserTest
@@ -16,11 +20,9 @@ public class ParserTest
     private static final RGBColor GRAY = new RGBColor(0.5);
     private static final RGBColor WHITE = new RGBColor(Color.WHITE);
 
-    
     private Parser myParser;
     @SuppressWarnings("unused")
     private Model myModel;
-
 
     @Before
     public void setUp ()
@@ -39,9 +41,9 @@ public class ParserTest
         runTest(WHITE, "  1");
         runTest(BLACK, " -1");
         // simple color examples
-        runTest(GRAY,  "0.5");
-        runTest(GRAY,  " .5");
-        runTest(GRAY,  "0.50000");
+        runTest(GRAY, "0.5");
+        runTest(GRAY, " .5");
+        runTest(GRAY, "0.50000");
     }
 
     @Test
@@ -63,7 +65,7 @@ public class ParserTest
         runTest(WHITE, "(mod 4 3)");
         runTest(WHITE, "(exp -1 0)");
     }
-    
+
     @Test
     public void testTrinaryOps ()
     {
@@ -71,25 +73,26 @@ public class ParserTest
         runTest(GRAY, "(color 0.5 (color 0.5 0.5 (color .5 0.5 .5) ) .5)");
         runTest(WHITE, "(let myVar -1 (mul myVar myVar))");
         runTest(GRAY, "(let foo .6 (let bar -0.1 (plus foo bar)))");
-        runTest(WHITE, "(let foo 0.2 (plus foo (let foo 0.8 foo)))");   
+        runTest(WHITE, "(let foo 0.2 (plus foo (let foo 0.8 foo)))");
     }
-    
+
     @Test
     public void testExceptions ()
     {
-//        runExceptionalTest(ParserException.Type.BAD_SYNTAX, "--1");
+// runExceptionalTest(ParserException.Type.BAD_SYNTAX, "--1");
         runExceptionalTest(ParserException.Type.EXTRA_CHARACTERS, "0.5 0.5");
-        runExceptionalTest(ParserException.Type.UNKNOWN_COMMAND,  "(fooo 0.1 0.9)");
-        runExceptionalTest(ParserException.Type.UNDEFINED_VARIABLE, "(plus (let foo .5 (plus bar bar)) .5)");
+        runExceptionalTest(ParserException.Type.UNKNOWN_COMMAND, "(fooo 0.1 0.9)");
+        runExceptionalTest(ParserException.Type.UNDEFINED_VARIABLE,
+                           "(plus (let foo .5 (plus bar bar)) .5)");
     }
-    
+
     @After
     public void tearDown ()
     {
         Model.removeMapping("x");
         Model.removeMapping("y");
     }
-    
+
     private void runExceptionalTest (ParserException.Type type, String expression)
     {
         try

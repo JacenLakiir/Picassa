@@ -6,10 +6,9 @@ import java.util.Iterator;
 
 
 /**
- * Represents an immutable RGB color, whose values range from -1 to 1
- * 
- * For more information about RGB colors, see:
- *   http://en.wikipedia.org/wiki/RGB_color_model
+ * Represents an immutable RGB color, whose values range from -1 to 1 For more
+ * information about RGB colors, see:
+ * http://en.wikipedia.org/wiki/RGB_color_model
  * 
  * @author Robert C. Duvall
  */
@@ -23,7 +22,6 @@ public class RGBColor implements Comparable<RGBColor>, Iterable<Double>
     private double myGreen;
     private double myBlue;
 
-
     /**
      * Create a color that represents BLACK.
      */
@@ -32,7 +30,6 @@ public class RGBColor implements Comparable<RGBColor>, Iterable<Double>
         this(COLOR_MIN);
     }
 
-
     /**
      * Create a grey-scale color from the given value.
      */
@@ -40,7 +37,6 @@ public class RGBColor implements Comparable<RGBColor>, Iterable<Double>
     {
         this(grey, grey, grey);
     }
-
 
     /**
      * Create a color from the given component values.
@@ -52,7 +48,6 @@ public class RGBColor implements Comparable<RGBColor>, Iterable<Double>
         myBlue = blue;
     }
 
-
     /**
      * Create a color from another RGBColor.
      */
@@ -60,7 +55,6 @@ public class RGBColor implements Comparable<RGBColor>, Iterable<Double>
     {
         this(other.getRed(), other.getGreen(), other.getBlue());
     }
-
 
     /**
      * Create a color from its corresponding Java Color.
@@ -72,7 +66,6 @@ public class RGBColor implements Comparable<RGBColor>, Iterable<Double>
              fromJava(javaColor.getBlue()));
     }
 
-
     /**
      * @return red component of this color
      */
@@ -80,7 +73,6 @@ public class RGBColor implements Comparable<RGBColor>, Iterable<Double>
     {
         return myRed;
     }
-
 
     /**
      * @return green component of this color
@@ -90,7 +82,6 @@ public class RGBColor implements Comparable<RGBColor>, Iterable<Double>
         return myGreen;
     }
 
-
     /**
      * @return blue component of this color
      */
@@ -98,7 +89,6 @@ public class RGBColor implements Comparable<RGBColor>, Iterable<Double>
     {
         return myBlue;
     }
-
 
     /**
      * Clamps this colors values to its max and min values.
@@ -110,7 +100,6 @@ public class RGBColor implements Comparable<RGBColor>, Iterable<Double>
         myBlue = clamp(getBlue());
     }
 
-
     /**
      * Wraps this color's component values around its max and min values.
      */
@@ -121,18 +110,15 @@ public class RGBColor implements Comparable<RGBColor>, Iterable<Double>
         myBlue = wrap(getBlue());
     }
 
-
     /**
-     * Converts this color's component values to grey-scale.
-     * 
-     * Computes weighted average of color components based on:
-     *   http://www.csulb.edu/~percept/kyotocolor.html
+     * Converts this color's component values to grey-scale. Computes weighted
+     * average of color components based on:
+     * http://www.csulb.edu/~percept/kyotocolor.html
      */
     public RGBColor toGreyScale ()
     {
         return new RGBColor(0.30 * getRed() + 0.59 * getGreen() + 0.11 * getBlue());
     }
-
 
     /**
      * Converts this colors to its corresponding Java Color.
@@ -140,11 +126,8 @@ public class RGBColor implements Comparable<RGBColor>, Iterable<Double>
     public Color toJavaColor ()
     {
         clamp();
-        return new Color(toJava(getRed()),
-                         toJava(getGreen()),
-                         toJava(getBlue()));
+        return new Color(toJava(getRed()), toJava(getGreen()), toJava(getBlue()));
     }
-
 
     /**
      * @return iterator over this color's component values.
@@ -155,12 +138,11 @@ public class RGBColor implements Comparable<RGBColor>, Iterable<Double>
         return Arrays.asList(getRed(), getGreen(), getBlue()).iterator();
     }
 
-
     /**
      * Compares this color with the given color for order.
      * 
-     * @return negative integer, zero, or a positive integer as this object is 
-     * less than, equal to, or greater than given object.
+     * @return negative integer, zero, or a positive integer as this object is
+     *         less than, equal to, or greater than given object.
      */
     @Override
     public int compareTo (RGBColor other)
@@ -168,28 +150,27 @@ public class RGBColor implements Comparable<RGBColor>, Iterable<Double>
         return Double.compare(toGreyScale().getRed(), other.toGreyScale().getRed());
     }
 
-
     /**
      * @return true iff this Color's component values match the given color's.
      */
+    @Override
     public boolean equals (Object o)
     {
         if (o instanceof RGBColor)
         {
-            return compareTo((RGBColor)o) == 0;
+            return compareTo((RGBColor) o) == 0;
         }
         return false;
     }
 
-
     /**
      * @return component values of this color as a string
      */
+    @Override
     public String toString ()
     {
         return "[ " + getRed() + " , " + getGreen() + " , " + getBlue() + " ]";
     }
-
 
     /**
      * Clamps the given value to the Color's max and min values.
@@ -199,7 +180,6 @@ public class RGBColor implements Comparable<RGBColor>, Iterable<Double>
         return Math.max(COLOR_MIN, Math.min(COLOR_MAX, value));
     }
 
-
     /**
      * Wraps the given value around the RGBColor's max and min values.
      */
@@ -207,11 +187,12 @@ public class RGBColor implements Comparable<RGBColor>, Iterable<Double>
     {
         double range = COLOR_MAX - COLOR_MIN;
         value %= range;
-        if (value > COLOR_MAX)      return value - range;
-        else if (value < COLOR_MIN) return value + range;
-        else                        return value;
+        if (value > COLOR_MAX)
+            return value - range;
+        else if (value < COLOR_MIN)
+            return value + range;
+        else return value;
     }
-
 
     /**
      * Converts the given value to the RGB Color's range.
@@ -220,9 +201,8 @@ public class RGBColor implements Comparable<RGBColor>, Iterable<Double>
     private static double fromJava (int value)
     {
         double range = COLOR_MAX - COLOR_MIN;
-        return (double)value / JAVA_COLOR_MAX * range + COLOR_MIN;
+        return (double) value / JAVA_COLOR_MAX * range + COLOR_MIN;
     }
-
 
     /**
      * Converts the given value to the Java Color's range.
@@ -231,6 +211,6 @@ public class RGBColor implements Comparable<RGBColor>, Iterable<Double>
     private static int toJava (double value)
     {
         double range = COLOR_MAX - COLOR_MIN;
-        return (int)((value - COLOR_MIN) / range * JAVA_COLOR_MAX);
+        return (int) ((value - COLOR_MIN) / range * JAVA_COLOR_MAX);
     }
 }

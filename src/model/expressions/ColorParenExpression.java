@@ -4,28 +4,32 @@ import java.util.List;
 import model.RGBColor;
 import model.util.ColorCombinations;
 
+
 public class ColorParenExpression extends ParenExpression
 {
-    
+
     private static final String myType = "color";
     private static final int myMinNumberOfOperands = 3;
     private static final int myMaxNumberOfOperands = 3;
-    
+
     public ColorParenExpression (List<Expression> operands)
     {
         super(operands);
     }
-    
+
+    @Override
     protected boolean matchesCommand (String command)
     {
         return (command.equals(myType));
     }
-    
+
+    @Override
     protected ParenExpression createThisTypeOfParenExpression (List<Expression> operands)
     {
         return new ColorParenExpression(operands);
     }
-    
+
+    @Override
     public RGBColor evaluate ()
     {
         RGBColor redComponent = myOperands.get(0).evaluate();
@@ -33,27 +37,31 @@ public class ColorParenExpression extends ParenExpression
         RGBColor blueComponent = myOperands.get(2).evaluate();
         return ColorCombinations.color(redComponent, greenComponent, blueComponent);
     }
-    
+
+    @Override
     protected String getType ()
     {
         return myType;
     }
-    
+
+    @Override
     protected int getMinNumberOfOperands ()
     {
         return myMinNumberOfOperands;
     }
-    
+
+    @Override
     protected int getMaxNumberOfOperands ()
     {
         return myMaxNumberOfOperands;
     }
-    
-    private ColorParenExpression () { }
-    
+
+    private ColorParenExpression ()
+    {}
+
     protected static ExpressionFactory getParenFactory ()
     {
         return new ExpressionFactory(new ColorParenExpression());
     }
-    
+
 }

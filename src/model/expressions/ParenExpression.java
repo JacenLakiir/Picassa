@@ -8,31 +8,34 @@ import java.util.regex.Pattern;
 import model.ParserException;
 import model.RGBColor;
 
+
 public class ParenExpression extends Expression
 {
 
-    // expression begins with a left parenthesis followed by the command name, 
+    // expression begins with a left parenthesis followed by the command name,
     // which is a sequence of alphabetic characters
     private static final Pattern myRegex = Pattern.compile("\\(([A-z]+)");
     private static final String myType = "ParenExpression";
     private static final List<ExpressionFactory> typesOfParenExpressions =
-            initializeParenExpressionFactory();
+        initializeParenExpressionFactory();
     private static final int myMinNumberOfOperands = -1;
     private static final int myMaxNumberOfOperands = -1;
     private static List<Class<?>> myOperandTypes;
     protected List<Expression> myOperands;
-    
-    public ParenExpression (List<Expression> operands) 
+
+    public ParenExpression (List<Expression> operands)
     {
         myOperands = operands;
     }
-     
+
+    @Override
     public boolean isThisTypeOfExpression (String parseableString)
     {
         Matcher expMatcher = myRegex.matcher(parseableString);
         return expMatcher.lookingAt();
     }
-    
+
+    @Override
     public Expression parseExpression (String parseableString)
     {
         String command = parseCommand(parseableString);
@@ -44,20 +47,23 @@ public class ParenExpression extends Expression
             {
                 parenExpressionType.checkNumberOfOperands(operands.size());
                 parenExpressionType.checkTypeOfOperands(operands);
-                return parenExpressionType.createThisTypeOfParenExpression(operands); 
+                return parenExpressionType.createThisTypeOfParenExpression(operands);
             }
         }
-        throw new ParserException("Unexpected expression type", ParserException.Type.UNKNOWN_COMMAND);
+        throw new ParserException("Unexpected expression type",
+                                  ParserException.Type.UNKNOWN_COMMAND);
     }
-    
+
+    @Override
     public RGBColor evaluate ()
     {
         return null;
     }
-       
+
     /**
      * @return string representation of expression
      */
+    @Override
     public String toString ()
     {
         StringBuffer result = new StringBuffer();
@@ -71,54 +77,52 @@ public class ParenExpression extends Expression
         result.append(")");
         return result.toString();
     }
-    
+
     protected boolean matchesCommand (String command)
     {
         return false;
     }
-    
+
     protected ParenExpression createThisTypeOfParenExpression (List<Expression> operands)
     {
         return null;
     }
-    
+
     protected void checkNumberOfOperands (int numOperandsParsed)
     {
         if (numOperandsParsed < getMinNumberOfOperands())
-            throw new ParserException("Not enough operands: at least " +
-                                       getMinNumberOfOperands() + " operand(s) required for " +
-                                       getType() + " expression");
+             throw new ParserException("Not enough operands: at least " + getMinNumberOfOperands() +
+                                       " operand(s) required for " + getType() + " expression");
         if (numOperandsParsed > getMaxNumberOfOperands())
-            throw new ParserException("Too many operands: no more than " + 
-                                       getMaxNumberOfOperands() + " operand(s) allowed for " +
-                                       getType() + " expression");
+             throw new ParserException("Too many operands: no more than " + getMaxNumberOfOperands() +
+                                       " operand(s) allowed for " + getType() + " expression");
     }
-    
+
     protected void checkTypeOfOperands (List<Expression> operands)
     {
         List<Class<?>> expectedOperandTypes = getOperandTypes();
-        if (expectedOperandTypes == null)
-            return;
+        if (expectedOperandTypes == null) return;
         boolean statusCheck = true;
         for (int i = 0; i < operands.size(); i++)
         {
-            statusCheck = statusCheck && isCorrectInstance(operands.get(i), expectedOperandTypes.get(i));
+            statusCheck =
+                statusCheck && isCorrectInstance(operands.get(i), expectedOperandTypes.get(i));
             if (statusCheck == false)
-                throw new ParserException("Incorrect type of operand(s). Should be " +
-                                          expectedOperandTypes.toString());
+                 throw new ParserException("Incorrect type of operand(s). Should be " +
+                                           expectedOperandTypes.toString());
         }
     }
-    
+
     protected String getType ()
     {
         return null;
     }
-    
+
     protected List<Expression> getOperands ()
     {
         return Collections.unmodifiableList(myOperands);
     }
- 
+
     protected int getMinNumberOfOperands ()
     {
         return myMinNumberOfOperands;
@@ -128,12 +132,12 @@ public class ParenExpression extends Expression
     {
         return myMaxNumberOfOperands;
     }
-    
-    protected <T> List<Class<?>> getOperandTypes()
+
+    protected <T> List<Class<?>> getOperandTypes ()
     {
         return myOperandTypes;
     }
-    
+
     private String parseCommand (String parseableString)
     {
         Matcher expMatcher = myRegex.matcher(parseableString);
@@ -142,7 +146,7 @@ public class ParenExpression extends Expression
         parser.moveParser(expMatcher.end());
         return command;
     }
-    
+
     private List<Expression> parseOperands ()
     {
         List<Expression> operands = new ArrayList<Expression>();
@@ -155,13 +159,12 @@ public class ParenExpression extends Expression
         parser.moveParser(parser.getCurrentPosition());
         return operands;
     }
-    
+
     private <T> boolean isCorrectInstance (Object parsedObject, Class<T> expectedObjectType)
     {
         return expectedObjectType.isInstance(parsedObject);
     }
-    
-    
+
     private static List<ExpressionFactory> initializeParenExpressionFactory ()
     {
         List<ExpressionFactory> parenExpressionTypes = new ArrayList<ExpressionFactory>();
@@ -186,19 +189,20 @@ public class ParenExpression extends Expression
         parenExpressionTypes.add(CosParenExpression.getParenFactory());
         parenExpressionTypes.add(TanParenExpression.getParenFactory());
         parenExpressionTypes.add(AtanParenExpression.getParenFactory());
-        parenExpressionTypes.add(LogParenExpression.getParenFactory());            
+        parenExpressionTypes.add(LogParenExpression.getParenFactory());
         parenExpressionTypes.add(RGBtoYUVParenExpression.getParenFactory());
         parenExpressionTypes.add(YUVtoRGBParenExpression.getParenFactory());
         parenExpressionTypes.add(PerlinColorParenExpression.getParenFactory());
         parenExpressionTypes.add(PerlinBWParenExpression.getParenFactory());
         return parenExpressionTypes;
     }
-            
-    protected ParenExpression () { }
-    
+
+    protected ParenExpression ()
+    {}
+
     public static ExpressionFactory getFactory ()
     {
         return new ExpressionFactory(new ParenExpression());
     }
-    
+
 }
