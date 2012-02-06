@@ -9,6 +9,7 @@ public class ExpParenExpression extends ParenExpression
 {
 
     private static final String myType = "exp";
+    private static final String mySymbol = "^";
     private static final int myMinNumberOfOperands = 2;
     private static final int myMaxNumberOfOperands = 2;
 
@@ -20,7 +21,7 @@ public class ExpParenExpression extends ParenExpression
     @Override
     protected boolean matchesCommand (String command)
     {
-        return (command.equals(myType));
+        return (command.equals(myType) || command.equals(mySymbol));
     }
 
     @Override
@@ -41,6 +42,12 @@ public class ExpParenExpression extends ParenExpression
     protected String getType ()
     {
         return myType;
+    }
+    
+    @Override
+    protected String getSymbol ()
+    {
+        return mySymbol;
     }
 
     @Override

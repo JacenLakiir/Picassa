@@ -50,6 +50,7 @@ public class ParserTest
     public void testUnaryOps ()
     {
         runTest(WHITE, "(neg -1)");
+        runTest(BLACK, "(! 1)");
         runTest(WHITE, "(abs -1)");
         runTest(BLACK, "(clamp -100.5  )");
         runTest(WHITE, "(wrap   3)");
@@ -61,9 +62,13 @@ public class ParserTest
         runTest(WHITE, "(plus .1 .9)");
         runTest(WHITE, "(plus (plus 0.01 0.09) (plus 0.4 0.5))");
         runTest(WHITE, "    (plus(plus 0.01 0.09)(plus 0.4 0.5   ))    ");
+        runTest(WHITE, "    (+(plus 0.01 0.09)(+ 0.4 0.5   ))    ");
         runTest(WHITE, "(minus (div 1.8 2) (mul -10 0.01))");
+        runTest(WHITE, "(- (/ 1.8 2) (* -10 0.01))");
         runTest(WHITE, "(mod 4 3)");
+        runTest(WHITE, "(% 4 3)");
         runTest(WHITE, "(exp -1 0)");
+        runTest(WHITE, "(^ -1 0)");
     }
 
     @Test
@@ -79,7 +84,8 @@ public class ParserTest
     @Test
     public void testExceptions ()
     {
-// runExceptionalTest(ParserException.Type.BAD_SYNTAX, "--1");
+        // runExceptionalTest(ParserException.Type.BAD_SYNTAX, "--1");
+        runExceptionalTest(ParserException.Type.BAD_SYNTAX, "(+plus 0.1 0.9)");
         runExceptionalTest(ParserException.Type.EXTRA_CHARACTERS, "0.5 0.5");
         runExceptionalTest(ParserException.Type.UNKNOWN_COMMAND, "(fooo 0.1 0.9)");
         runExceptionalTest(ParserException.Type.UNDEFINED_VARIABLE,

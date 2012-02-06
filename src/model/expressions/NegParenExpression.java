@@ -9,6 +9,7 @@ public class NegParenExpression extends ParenExpression
 {
 
     private static final String myType = "neg";
+    private static final String mySymbol = "!";
     private static final int myMinNumberOfOperands = 1;
     private static final int myMaxNumberOfOperands = 1;
 
@@ -20,7 +21,7 @@ public class NegParenExpression extends ParenExpression
     @Override
     protected boolean matchesCommand (String command)
     {
-        return (command.equals(myType));
+        return (command.equals(myType) || command.equals(mySymbol));
     }
 
     @Override
@@ -40,6 +41,12 @@ public class NegParenExpression extends ParenExpression
     protected String getType ()
     {
         return myType;
+    }
+    
+    @Override
+    protected String getSymbol ()
+    {
+        return mySymbol;
     }
 
     @Override

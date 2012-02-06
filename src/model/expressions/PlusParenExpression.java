@@ -9,6 +9,7 @@ public class PlusParenExpression extends ParenExpression
 {
 
     private static final String myType = "plus";
+    private static final String mySymbol = "+";
     private static final int myMinNumberOfOperands = 2;
     private static final int myMaxNumberOfOperands = 2;
 
@@ -20,7 +21,7 @@ public class PlusParenExpression extends ParenExpression
     @Override
     protected boolean matchesCommand (String command)
     {
-        return (command.equals(myType));
+        return (command.equals(myType) || command.equals(mySymbol));
     }
 
     @Override
@@ -41,6 +42,12 @@ public class PlusParenExpression extends ParenExpression
     protected String getType ()
     {
         return myType;
+    }
+    
+    @Override
+    protected String getSymbol ()
+    {
+        return mySymbol;
     }
 
     @Override

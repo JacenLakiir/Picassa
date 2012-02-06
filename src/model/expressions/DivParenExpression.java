@@ -9,6 +9,7 @@ public class DivParenExpression extends ParenExpression
 {
 
     private static final String myType = "div";
+    private static final String mySymbol = "/";
     private static final int myMinNumberOfOperands = 2;
     private static final int myMaxNumberOfOperands = 2;
 
@@ -20,7 +21,7 @@ public class DivParenExpression extends ParenExpression
     @Override
     protected boolean matchesCommand (String command)
     {
-        return (command.equals(myType));
+        return (command.equals(myType) || command.equals(mySymbol));
     }
 
     @Override
@@ -43,6 +44,12 @@ public class DivParenExpression extends ParenExpression
         return myType;
     }
 
+    @Override
+    protected String getSymbol ()
+    {
+        return mySymbol;
+    }
+    
     @Override
     protected int getMinNumberOfOperands ()
     {

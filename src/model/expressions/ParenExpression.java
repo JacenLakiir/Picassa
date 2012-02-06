@@ -13,8 +13,12 @@ public class ParenExpression extends Expression
 {
 
     // expression begins with a left parenthesis followed by the command name,
-    // which is a sequence of alphabetic characters
-    private static final Pattern myRegex = Pattern.compile("\\(([A-z]+)");
+    // which is a sequence of alphabetic characters, or the command symbol,
+    // which is one of several special symbols
+    private static final String commandRegex = "[A-z]+";
+    private static final String symbolRegex = "[\\+\\-\\*/%\\^!]";
+    private static final Pattern myRegex = Pattern.compile("\\((" + commandRegex + "|" + symbolRegex + ")");
+    
     private static final String myType = "ParenExpression";
     private static final List<ExpressionFactory> typesOfParenExpressions =
         initializeParenExpressionFactory();
@@ -114,6 +118,11 @@ public class ParenExpression extends Expression
     }
 
     protected String getType ()
+    {
+        return myType;
+    }
+    
+    protected String getSymbol ()
     {
         return null;
     }
