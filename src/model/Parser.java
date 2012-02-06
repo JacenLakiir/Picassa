@@ -67,7 +67,7 @@ public class Parser
             if (expressionType.isThisTypeOfExpression(parseableString))
                 return expressionType.parseExpression(parseableString);
         }
-        throw new ParserException("Unexpected expression type",
+        throw new ParserException("Unexpected expression type: " + parseableString,
                                   ParserException.Type.UNKNOWN_COMMAND);
     }
 

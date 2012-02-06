@@ -19,6 +19,9 @@ public class Model
     // state of the model
     public static final double DOMAIN_MIN = -1;
     public static final double DOMAIN_MAX = 1;
+    public static final int NUM_FRAMES = 50;
+    private double myCurrentTime = 0;
+
     private static TreeMap<String, RGBColor> variableMap;
 
     private Model ()
@@ -49,13 +52,30 @@ public class Model
             for (int imageX = 0; imageX < size.width; imageX++)
             {
                 variableMap.put("x", new RGBColor(imageToDomainScale(imageX, size.width)));
+                variableMap.put("t", new RGBColor(myCurrentTime*2 - 1));
                 result.setColor(imageX, imageY, toEval.evaluate().toJavaColor());
             }
         }
         return result;
     }
+    
+    /**
+     * Advance to the next frame in the animation.
+     */
+    public void reset ()
+    {
+        myCurrentTime = 0;
+    }
 
-    public static RGBColor getValue (String variable)
+    /**
+     * Advance to the next frame in the animation.
+     */
+    public void nextFrame ()
+    {
+        myCurrentTime += 1.0 / NUM_FRAMES;
+    }
+
+    public RGBColor getValue (String variable)
     {
         RGBColor value = variableMap.get(variable);
         if (value == null)
@@ -63,12 +83,12 @@ public class Model
         return value;
     }
 
-    public static void storeMapping (String variable, RGBColor color)
+    public void storeMapping (String variable, RGBColor color)
     {
         variableMap.put(variable, color);
     }
 
-    public static void removeMapping (String variable)
+    public void removeMapping (String variable)
     {
         variableMap.remove(variable);
     }
@@ -81,4 +101,5 @@ public class Model
         double range = DOMAIN_MAX - DOMAIN_MIN;
         return ((double) value / bounds) * range + DOMAIN_MIN;
     }
+    
 }

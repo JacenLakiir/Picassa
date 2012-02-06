@@ -54,7 +54,7 @@ public class ParenExpression extends Expression
                 return parenExpressionType.createThisTypeOfParenExpression(operands);
             }
         }
-        throw new ParserException("Unexpected expression type",
+        throw new ParserException("Unexpected paren expression type: " + parseableString,
                                   ParserException.Type.UNKNOWN_COMMAND);
     }
 
@@ -150,22 +150,22 @@ public class ParenExpression extends Expression
     private String parseCommand (String parseableString)
     {
         Matcher expMatcher = myRegex.matcher(parseableString);
-        expMatcher.find(parser.getCurrentPosition());
+        expMatcher.find(myParser.getCurrentPosition());
         String command = expMatcher.group(1);
-        parser.moveParser(expMatcher.end());
+        myParser.moveParser(expMatcher.end());
         return command;
     }
 
     private List<Expression> parseOperands ()
     {
         List<Expression> operands = new ArrayList<Expression>();
-        while (parser.currentCharacter() != ')')
+        while (myParser.currentCharacter() != ')')
         {
-            operands.add(parser.getAndParseExpression());
-            parser.skipWhiteSpace();
+            operands.add(myParser.getAndParseExpression());
+            myParser.skipWhiteSpace();
         }
-        parser.incrementCurrentPosition();
-        parser.moveParser(parser.getCurrentPosition());
+        myParser.incrementCurrentPosition();
+        myParser.moveParser(myParser.getCurrentPosition());
         return operands;
     }
 

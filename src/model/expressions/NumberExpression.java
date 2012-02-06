@@ -31,9 +31,9 @@ public class NumberExpression extends Expression
     public Expression parseExpression (String parseableString)
     {
         Matcher doubleMatcher = myRegex.matcher(parseableString);
-        doubleMatcher.find(parser.getCurrentPosition());
+        doubleMatcher.find(myParser.getCurrentPosition());
         String numberMatch = parseableString.substring(doubleMatcher.start(), doubleMatcher.end());
-        parser.moveParser(doubleMatcher.end());
+        myParser.moveParser(doubleMatcher.end());
         return new NumberExpression(Double.parseDouble(numberMatch));
     }
 

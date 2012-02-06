@@ -1,5 +1,6 @@
 package model.expressions;
 
+import model.Model;
 import model.Parser;
 import model.RGBColor;
 
@@ -7,7 +8,8 @@ import model.RGBColor;
 public abstract class Expression
 {
     public static final String myType = "Expression";
-    protected static Parser parser = Parser.getInstance();
+    protected static Parser myParser = Parser.getInstance();
+    protected static Model myModel = Model.getInstance();
 
     public Expression ()
     {}

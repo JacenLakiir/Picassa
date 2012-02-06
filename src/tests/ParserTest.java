@@ -21,7 +21,6 @@ public class ParserTest
     private static final RGBColor WHITE = new RGBColor(Color.WHITE);
 
     private Parser myParser;
-    @SuppressWarnings("unused")
     private Model myModel;
 
     @Before
@@ -30,8 +29,8 @@ public class ParserTest
         // initialize stuff here
         myParser = Parser.getInstance();
         myModel = Model.getInstance();
-        Model.storeMapping("x", new RGBColor(-1));
-        Model.storeMapping("y", new RGBColor(-1));
+        myModel.storeMapping("x", new RGBColor(-1));
+        myModel.storeMapping("y", new RGBColor(-1));
     }
 
     @Test
@@ -108,8 +107,8 @@ public class ParserTest
     @After
     public void tearDown ()
     {
-        Model.removeMapping("x");
-        Model.removeMapping("y");
+        myModel.removeMapping("x");
+        myModel.removeMapping("y");
     }
 
     private void runExceptionalTest (ParserException.Type type, String expression)

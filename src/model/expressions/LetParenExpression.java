@@ -2,7 +2,6 @@ package model.expressions;
 
 import java.util.ArrayList;
 import java.util.List;
-import model.Model;
 import model.RGBColor;
 
 
@@ -38,9 +37,9 @@ public class LetParenExpression extends ParenExpression
     public RGBColor evaluate ()
     {
         RGBColor tempVarColor = myOperands.get(1).evaluate();
-        Model.storeMapping(myVariableExpression.getVariable(), tempVarColor);
+        myModel.storeMapping(myVariableExpression.getVariable(), tempVarColor);
         myColor = myOperands.get(2).evaluate();
-        Model.removeMapping(myVariableExpression.getVariable());
+        myModel.removeMapping(myVariableExpression.getVariable());
         return myColor;
     }
 
