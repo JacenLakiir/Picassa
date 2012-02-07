@@ -52,7 +52,6 @@ public class Model
             for (int imageX = 0; imageX < size.width; imageX++)
             {
                 variableMap.put("x", new RGBColor(imageToDomainScale(imageX, size.width)));
-                variableMap.put("t", new RGBColor(myCurrentTime * 2 - 1));
                 result.setColor(imageX, imageY, toEval.evaluate().toJavaColor());
             }
         }
@@ -73,6 +72,7 @@ public class Model
     public void nextFrame ()
     {
         myCurrentTime += 1.0 / NUM_FRAMES;
+        variableMap.put("t", new RGBColor(myCurrentTime * 2 - 1));
     }
 
     public RGBColor getValue (String variable)
