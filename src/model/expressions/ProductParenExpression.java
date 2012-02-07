@@ -9,7 +9,7 @@ public class ProductParenExpression extends ParenExpression
 {
 
     private static final String myType = "product";
-    private static final int myMinNumberOfOperands = 2;
+    private static final int myMinNumberOfOperands = 0;
     private static final int myMaxNumberOfOperands = Integer.MAX_VALUE;
 
     public ProductParenExpression (List<Expression> operands)
@@ -32,12 +32,10 @@ public class ProductParenExpression extends ParenExpression
     @Override
     public RGBColor evaluate ()
     {
-        RGBColor color1 = myOperands.get(0).evaluate();
-        RGBColor color2 = myOperands.get(1).evaluate();
-        RGBColor sumColor = ColorCombinations.multiply(color1, color2);
-        for (int i = 2; i < myOperands.size(); i++)
-            sumColor = ColorCombinations.multiply(sumColor, myOperands.get(i).evaluate());
-        return sumColor;
+        RGBColor productColor = new RGBColor(1);
+        for (int i = 0; i < myOperands.size(); i++)
+            productColor = ColorCombinations.multiply(productColor, myOperands.get(i).evaluate());
+        return productColor;
     }
 
     @Override

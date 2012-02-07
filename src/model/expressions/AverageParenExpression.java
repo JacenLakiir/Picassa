@@ -9,7 +9,7 @@ public class AverageParenExpression extends ParenExpression
 {
 
     private static final String myType = "average";
-    private static final int myMinNumberOfOperands = 2;
+    private static final int myMinNumberOfOperands = 1;
     private static final int myMaxNumberOfOperands = Integer.MAX_VALUE;
 
     public AverageParenExpression (List<Expression> operands)

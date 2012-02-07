@@ -9,7 +9,7 @@ public class MinParenExpression extends ParenExpression
 {
 
     private static final String myType = "min";
-    private static final int myMinNumberOfOperands = 2;
+    private static final int myMinNumberOfOperands = 1;
     private static final int myMaxNumberOfOperands = Integer.MAX_VALUE;
 
     public MinParenExpression (List<Expression> operands)

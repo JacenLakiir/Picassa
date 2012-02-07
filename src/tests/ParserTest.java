@@ -17,7 +17,8 @@ public class ParserTest
 {
     // useful constants
     private static final RGBColor BLACK = new RGBColor(Color.BLACK);
-    private static final RGBColor GRAY = new RGBColor(0.5);
+    private static final RGBColor GRAY = new RGBColor(0);
+    private static final RGBColor GRAYSCALE = new RGBColor(0.5);
     private static final RGBColor WHITE = new RGBColor(Color.WHITE);
 
     private Parser myParser;
@@ -41,9 +42,9 @@ public class ParserTest
         runTest(WHITE, "  1");
         runTest(BLACK, " -1");
         // simple color examples
-        runTest(GRAY, "0.5");
-        runTest(GRAY, " .5");
-        runTest(GRAY, "0.50000");
+        runTest(GRAYSCALE, "0.5");
+        runTest(GRAYSCALE, " .5");
+        runTest(GRAYSCALE, "0.50000");
     }
 
     @Test
@@ -75,11 +76,11 @@ public class ParserTest
     public void testTrinaryOps ()
     {
         runTest(BLACK, "(color (color -1 -1 -1) -1 (color (color -1 -1 -1) -1 -1)) ");
-        runTest(GRAY, "(color 0.5 (color 0.5 0.5 (color .5 0.5 .5) ) .5)");
+        runTest(GRAYSCALE, "(color 0.5 (color 0.5 0.5 (color .5 0.5 .5) ) .5)");
         runTest(WHITE, "(let myVar -1 (mul myVar myVar))");
-        runTest(GRAY, "(let foo .6 (let bar -0.1 (plus foo bar)))");
+        runTest(GRAYSCALE, "(let foo .6 (let bar -0.1 (plus foo bar)))");
         runTest(WHITE, "(let foo 0.2 (plus foo (let foo 0.8 foo)))");
-        runTest(GRAY, "(if 0 x 0.5)");
+        runTest(GRAYSCALE, "(if 0 x 0.5)");
         runTest(WHITE, "(if (color 0.5 (color 0.5 0.5 (color .5 0.5 .5) ) .5) 1 y)");
         runTest(BLACK, "(if (clamp (! 100.5 ) ) (product y x 2) -1)");
     }
@@ -87,12 +88,19 @@ public class ParserTest
     @Test
     public void testInfiniteOps ()
     {
-        runTest(GRAY, "(sum 0.2 0.2 0.05 .03 0.01 .01)");
-        runTest(GRAY, "(product 1 1 0.5 -1 (! 1))");
-        runTest(GRAY,
+        runTest(GRAYSCALE, "(sum 0.2 0.2 0.05 .03 0.01 .01)");
+        runTest(GRAYSCALE, "(product 1 1 0.5 -1 (! 1))");
+        runTest(GRAYSCALE,
                 "(average (color 1 1 1) (color (! 1) (neg 1) -1) (color 1 1 1) (color 1 1 1))");
         runTest(BLACK, "(min (mul x x) y 0 (plus .1 0.9) -1)");
         runTest(WHITE, "(max (mul x x) y 0 (plus .1 0.9) -1)");
+        runTest(BLACK, "(average (mul -1 1))");
+        runTest(WHITE, "(min   1)");
+        runTest(GRAYSCALE, "(max .5  )");
+        runTest(GRAY, "(sum )");
+        runTest(WHITE, "(sum 1)");
+        runTest(WHITE, "(product)");
+        runTest(GRAY, "(product 0    )");
     }
 
     @Test
@@ -104,7 +112,7 @@ public class ParserTest
         runExceptionalTest(ParserException.Type.UNKNOWN_COMMAND, "(fooo 0.1 0.9)");
         runExceptionalTest(ParserException.Type.UNDEFINED_VARIABLE,
                            "(plus (let foo .5 (plus bar bar)) .5)");
-        runExceptionalTest(ParserException.Type.BAD_SYNTAX, "(sum 1)");
+        runExceptionalTest(ParserException.Type.BAD_SYNTAX, "(average)");
     }
 
     @After

@@ -9,7 +9,7 @@ public class SumParenExpression extends ParenExpression
 {
 
     private static final String myType = "sum";
-    private static final int myMinNumberOfOperands = 2;
+    private static final int myMinNumberOfOperands = 0;
     private static final int myMaxNumberOfOperands = Integer.MAX_VALUE;
 
     public SumParenExpression (List<Expression> operands)
@@ -32,10 +32,8 @@ public class SumParenExpression extends ParenExpression
     @Override
     public RGBColor evaluate ()
     {
-        RGBColor color1 = myOperands.get(0).evaluate();
-        RGBColor color2 = myOperands.get(1).evaluate();
-        RGBColor sumColor = ColorCombinations.add(color1, color2);
-        for (int i = 2; i < myOperands.size(); i++)
+        RGBColor sumColor = new RGBColor(0);
+        for (int i = 0; i < myOperands.size(); i++)
             sumColor = ColorCombinations.add(sumColor, myOperands.get(i).evaluate());
         return sumColor;
     }
